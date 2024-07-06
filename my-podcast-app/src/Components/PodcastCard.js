@@ -1,83 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// src/Components/PodcastCard.js
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import ReactAudioPlayer from 'react-audio-player';
+import { FavouritesContext } from '../Contexts/FavouritesContext';
+import '../Styles/main.css';
 
-const PodcastCard = ({ podcast, addToFavourites, isFavourite, fetchShowDetails }) => {
-  const [showDetails, setShowDetails] = useState(null); // State for show object
-  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
-  const [errorFetchingDetails, setErrorFetchingDetails] = useState(null);
+const PodcastCard = ({ id, title, description, imageUrl, audioUrl }) => {
+  const { addFavourite, removeFavourite, favourites } = useContext(FavouritesContext);
 
-  const handleFetchDetails = async () => {
-    setIsLoadingDetails(true);
-    setErrorFetchingDetails(null);
-    try {
-      const response = await axios.get(`https://podcast-api.netlify.app/id/${podcast.id}`);
-      setShowDetails(response.data);
-    } catch (error) {
-      setErrorFetchingDetails('Error fetching show details');
-      console.error('Error fetching show details:', error);
-    } finally {
-      setIsLoadingDetails(false);
+  const isFavourite = favourites.some(fav => fav.id === id);
+
+  const toggleFavourite = () => {
+    if (isFavourite) {
+      removeFavourite({ id, title, description, imageUrl, audioUrl });
+    } else {
+      addFavourite({ id, title, description, imageUrl, audioUrl });
     }
   };
 
-  useEffect(() => {
-    // Call fetchShowDetails if a function is provided (optional)
-    if (fetchShowDetails) {
-      fetchShowDetails();
-    }
-  }, [fetchShowDetails]);
-
-  // ... rest of the PodcastCard component logic ...
-
-  if (isLoadingDetails) {
-    return <p>Loading show details...</p>;
-  }
-
-  if (errorFetchingDetails) {
-    return <p>{errorFetchingDetails}</p>;
-  }
-
-  if (showDetails) {
-    return (
-      <div className="podcast-card">
-        <img src={podcast.imageUrl} alt={podcast.title} />
-        <h3>{podcast.title}</h3>
-        <p>{podcast.author}</p>
-        <p>{showDetails.description}</p>
-        {/* Assuming showDetails contains these properties */}
-        <ul>
-          <li>Number of Episodes: {showDetails.numEpisodes}</li>
-          <li>Genre: {showDetails.genre}</li>
-          <li>Host(s): {showDetails.hosts.join(', ')}</li>
-        </ul>
-        <button onClick={handleFetchDetails}>
-          {showDetails ? 'Details' : 'View Details'}
-        </button>
-      </div>
-    );
-  }
-  
-
-  // Display basic information from the preview object and button
   return (
     <div className="podcast-card">
-      <img src={podcast.imageUrl} alt={podcast.title} />
-      <h3>{podcast.title}</h3>
-      <p>{podcast.author}</p>
-      <button onClick={handleFetchDetails}>
-        <div className="podcast-card">
-  {/*... other card content... */}
-  {isFavourite? (
-    <button onClick={() => addToFavourites(podcast.id)}>Unfavourite</button>
-  ) : (
-    <button onClick={() => addToFavourites(podcast.id)}>Favourite</button>
-  )}
-</div>
-        {showDetails ? 'Details' : 'View Details'}
-      </button>
-      {/* ... other card content ... */}
+      {imageUrl && <img src={imageUrl} alt={`${title} cover`} className="podcast-image" />}
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <ReactAudioPlayer
+        src={audioUrl}
+        controls
+        className="audio-player"
+      />
+      <i className={`fas fa-heart play-icon ${isFavourite ? 'favourite' : ''}`} onClick={toggleFavourite}></i>
     </div>
   );
+};
+
+PodcastCard.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  audioUrl: PropTypes.string.isRequired,
+};
+
+PodcastCard.defaultProps = {
+  imageUrl: '', // Provide a default value
 };
 
 export default PodcastCard;

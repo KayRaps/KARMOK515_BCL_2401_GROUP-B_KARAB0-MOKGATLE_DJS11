@@ -1,105 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// src/Pages/Profile.js
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../Contexts/AuthContext';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
+import '../Styles/main.css';
 
 const Profile = () => {
-  const [user, setUser] = useState(null);
-  const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    bio: ''
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get('/api/user'); // Adjust the API endpoint as needed
-        setUser(response.data);
-        setFormData({
-          name: response.data.name,
-          email: response.data.email,
-          bio: response.data.bio
-        });
-      } catch (error) {
-        setError('Error fetching user data');
-        console.error('Error fetching user data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, []);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const handleSave = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.put('/api/user', formData); // Adjust the API endpoint as needed
-      setUser(response.data);
-      setEditMode(false);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      setError('Error updating profile');
-      console.error('Error updating profile:', error);
+      console.error('Error logging in:', error);
     }
   };
 
-  if (loading) {
-    return <p>Loading profile...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
-    <div className="profile">
-      <h1>Profile</h1>
-      {editMode ? (
+    <div className="profile-page">
+      {currentUser ? (
         <div>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Bio:
-            <textarea
-              name="bio"
-              value={formData.bio}
-              onChange={handleInputChange}
-            />
-          </label>
-          <button onClick={handleSave}>Save</button>
-          <button onClick={() => setEditMode(false)}>Cancel</button>
+          <h1>Welcome, {currentUser.email}</h1>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
-        <div>
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
-          <p>Bio: {user.bio}</p>
-          <button onClick={() => setEditMode(true)}>Edit Profile</button>
-        </div>
+        <form onSubmit={handleLogin}>
+          <h1>Login</h1>
+          <div>
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit">Login</button>
+        </form>
       )}
     </div>
   );

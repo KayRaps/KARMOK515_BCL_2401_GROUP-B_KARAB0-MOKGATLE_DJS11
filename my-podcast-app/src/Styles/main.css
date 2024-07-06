@@ -1,0 +1,271 @@
+/* Root Variables */
+:root {
+    --primary-color: #ff6f61;
+    --secondary-color: #ffcc00;
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --accent-color: #4caf50;
+    --navbar-hover-color: #ff9a8d;
+}
+
+/* Body Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    background: linear-gradient(to right, #ffecd2, #fcb69f); /* Gradient background */
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: var(--background-color);
+    padding: 0.5rem;
+}
+
+.navbar:hover {
+    background-color: var(--navbar-hover-color);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    transition: all 0.2s ease-in-out;
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+  }
+  
+  .sidebar-toggle {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 1rem 0;
+  }
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .app {
+    display: flex;
+  }
+  
+  .main-content {
+    flex: 1;
+    margin-left: 200px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+    }
+  
+    .sidebar.active {
+      transform: translateX(0);
+    }
+  
+    .main-content {
+      margin-left: 0;
+    }
+}
+/* Header */
+header {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    padding: 1rem;
+    text-align: center;
+    font-size: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Centered Elements */
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.search-bar, .sort, .genre {
+    margin: 0 1rem;
+}
+
+/* Podcast Cards */
+.podcast-card {
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+    padding: 1rem;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.podcast-card:hover {
+    transform: scale(1.05);
+}
+
+.podcast-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.play-icon {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+/* Reset and Base Styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Responsive Sidebar */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 100vh;
+        background-color: #f0f0f0;
+        padding: 1rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .sidebar.active {
+        transform: translateX(-100%);
+    }
+
+    .app {
+        display: flex;
+    }
+
+    .main-content {
+        flex: 1;
+    }
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f0f0f0;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: black;
+    padding: 0.5rem;
+}
+
+/* Search Controls Container */
+.search-controls-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.search-input, .sort-dropdown, .genre-dropdown {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 1rem;
+}
+
+.search-input:hover, .sort-dropdown:hover, .genre-dropdown:hover {
+    border-color: #999;
+}
+
+/* DisplayPodcast Page Styles */
+.display-podcast {
+    padding: 1rem;
+}
+
+/* Podcast Grid Styles */
+.podcast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+/* Podcast Card Styles */
+.podcast-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Buttons */
+button {
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 4px;
+    color: var(--background-color);
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: darken(var(--accent-color), 10%);
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.podcast-card {
+    animation: fadeIn 0.5s ease-in-out;
+}
