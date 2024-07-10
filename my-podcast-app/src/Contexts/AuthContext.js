@@ -1,7 +1,7 @@
 // src/Contexts/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
+import { auth } from '../firebaseConfig'; // Correct path without extra space
 
 export const AuthContext = createContext();
 
