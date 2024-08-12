@@ -1,11 +1,13 @@
-// src/Pages/Profile.js
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';  // Corrected 'react' spelling
+
 import { AuthContext } from '../Contexts/AuthContext';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '../firebaseConfig'; // Correct path without extra space
+import { auth } from '../firebaseConfig';
 
 const Profile = () => {
   const { currentUser } = useContext(AuthContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSignIn = (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
@@ -33,12 +35,20 @@ const Profile = () => {
       {currentUser ? (
         <div>
           <p>Welcome, {currentUser.email}</p>
-          <button onClick={handleSignOut}>Sign Out</button>
+          <button onClick={handleSignOut}>Sign Out</button> {/* Added onClick handler */}
         </div>
       ) : (
         <div>
           <p>Please log in</p>
-          {/* Implement your login form here */}
+          <form onSubmit={(e) => { e.preventDefault(); handleSignIn(email, password); }}> {/* Added onSubmit handler */}
+            <label>Email:</label>
+            <input value={email} type="email" onChange={(e) => setEmail(e.target.value)} /> {/* Corrected onChange handler */}
+            <br />
+            <label>Password:</label>
+            <input value={password} type="password" onChange={(e) => setPassword(e.target.value)} /> {/* Corrected onChange handler */}
+            <br />
+            <button type="submit">Log In</button> {/* Added type="submit" */}
+          </form>
         </div>
       )}
     </div>

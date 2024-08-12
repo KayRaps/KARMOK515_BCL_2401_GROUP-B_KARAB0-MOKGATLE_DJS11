@@ -22,11 +22,14 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 1rem;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
     background-color: var(--primary-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
 }
+
 
 .navbar a {
     text-decoration: none;
@@ -38,7 +41,7 @@ body {
     background-color: var(--navbar-hover-color);
 }
 
-/* Sidebar */
+/* Sidebar 
 .sidebar {
     position: fixed;
     top: 0;
@@ -100,7 +103,7 @@ body {
     .main-content {
       margin-left: 0;
     }
-}
+}*/
 /* Header */
 header {
     background-color: var(--primary-color);
@@ -125,27 +128,46 @@ header {
 
 /* Podcast Cards */
 .podcast-card {
-    background-color: var(--secondary-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 1rem;
-    padding: 1rem;
-    transition: transform 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
 
 .podcast-card:hover {
     transform: scale(1.05);
 }
 
 .podcast-image {
-    width: 100%;
+    max-width: 100%;
     height: auto;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+
+.podcast-content {
+    text-align: center;
+  }
+
+.podcast-content h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+.podcast-content p {
+    font-size: 1em;
+    margin-bottom: 15px;
+  }
+  
+.audio-player {
+    width: 100%;
+    margin-bottom: 10px;
+  }  
 
 .play-icon {
     font-size: 1.5rem;
@@ -153,6 +175,20 @@ header {
     margin-top: 1rem;
     cursor: pointer;
 }
+
+.favourite {
+    color: red;
+  }
+
+.favourites-page {
+    padding: 20px;
+  }
+  
+.podcast-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
 /* Reset and Base Styles */
 body {

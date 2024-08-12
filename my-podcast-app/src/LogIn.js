@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 
 function logIn(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password) // Added return statement
     .then((userCredential) => {
       // Logged in
       const user = userCredential.user;
       console.log("User logged in:", user);
+      return user; // Return user object
     })
     .catch((error) => {
       console.error("Error logging in:", error);
+      throw error; // Throw error to handle in UI
     });
 }
 
@@ -20,21 +22,29 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    logIn(email, password);
+    logIn(email, password)
+      .then((user) => {
+        // Handle successful login
+        // You can redirect or update state to indicate logged-in state
+      })
+      .catch((error) => {
+        // Handle login error
+        // You can show an error message to the user
+      });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}> {/* Added onSubmit handler */}
       <input
-        type="email"
         value={email}
+        type="email"
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
         required
       />
       <input
-        type="password"
         value={password}
+        type="password"
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         required

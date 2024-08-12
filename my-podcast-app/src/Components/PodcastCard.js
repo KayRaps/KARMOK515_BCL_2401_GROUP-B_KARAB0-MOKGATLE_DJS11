@@ -1,4 +1,3 @@
-// src/Components/PodcastCard.js
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
@@ -12,7 +11,7 @@ const PodcastCard = ({ id, title, description, imageUrl, audioUrl }) => {
 
   const toggleFavourite = () => {
     if (isFavourite) {
-      removeFavourite({ id, title, description, imageUrl, audioUrl });
+      removeFavourite(id);
     } else {
       addFavourite({ id, title, description, imageUrl, audioUrl });
     }
@@ -21,14 +20,16 @@ const PodcastCard = ({ id, title, description, imageUrl, audioUrl }) => {
   return (
     <div className="podcast-card">
       {imageUrl && <img src={imageUrl} alt={`${title} cover`} className="podcast-image" />}
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <ReactAudioPlayer
-        src={audioUrl}
-        controls
-        className="audio-player"
-      />
-      <i className={`fas fa-heart play-icon ${isFavourite ? 'favourite' : ''}`} onClick={toggleFavourite}></i>
+      <div className="podcast-content">
+        <h2>{title}</h2>
+        <p>{description}</p>
+        <ReactAudioPlayer
+          src={audioUrl}
+          controls
+          className="audio-player"
+        />
+        <i className={`fas fa-heart play-icon ${isFavourite ? 'favourite' : ''}`} onClick={toggleFavourite}></i>
+      </div>
     </div>
   );
 };

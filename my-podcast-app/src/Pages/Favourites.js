@@ -1,4 +1,3 @@
-// src/Pages/Favourites.js
 import React, { useContext } from 'react';
 import { FavouritesContext } from '../Contexts/FavouritesContext';
 import PodcastCard from '../Components/PodcastCard';
@@ -8,9 +7,9 @@ const Favourites = () => {
   const { favourites } = useContext(FavouritesContext);
 
   return (
-    <div className="display-podcast">
+    <div className="favourites-page">
       <h1>Your Favourites</h1>
-      <div className="podcast-grid">
+      <div className="podcast-list">
         {favourites.map(podcast => (
           <PodcastCard
             key={podcast.id}

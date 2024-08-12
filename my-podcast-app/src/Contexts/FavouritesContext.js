@@ -1,4 +1,3 @@
-// src/Contexts/FavouritesContext.js
 import React, { createContext, useState } from 'react';
 
 export const FavouritesContext = createContext();
@@ -10,8 +9,8 @@ export const FavouritesProvider = ({ children }) => {
     setFavourites([...favourites, podcast]);
   };
 
-  const removeFavourite = (podcast) => {
-    setFavourites(favourites.filter(fav => fav.id !== podcast.id));
+  const removeFavourite = (id) => {
+    setFavourites(favourites.filter(podcast => podcast.id !== id));
   };
 
   return (
