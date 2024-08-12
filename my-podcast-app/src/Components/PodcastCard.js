@@ -22,7 +22,7 @@ const PodcastCard = ({ id, title, description, imageUrl, audioUrl }) => {
       {imageUrl && <img src={imageUrl} alt={`${title} cover`} className="podcast-image" />}
       <div className="podcast-content">
         <h2>{title}</h2>
-        <p>{description}</p>
+        <p>{description || "No description available"}</p> {/* Fallback to default text */}
         <ReactAudioPlayer
           src={audioUrl}
           controls
@@ -43,7 +43,8 @@ PodcastCard.propTypes = {
 };
 
 PodcastCard.defaultProps = {
-  imageUrl: '', // Provide a default value
+  description: "No description available", // Default value for description
+  imageUrl: '', // Default value for imageUrl
 };
 
 export default PodcastCard;
