@@ -6,8 +6,9 @@ import '../Styles/main.css';
 
 const PodcastCard = ({ id, title, description, imageUrl, audioUrl }) => {
   const { addFavourite, removeFavourite, favourites } = useContext(FavouritesContext);
-
   const isFavourite = favourites.some(fav => fav.id === id);
+
+  console.log(id)
 
   const toggleFavourite = () => {
     if (isFavourite) {
